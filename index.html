@@ -40,7 +40,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                 סייר המאגר
             </div>
-            <a href="about.html" class="text-sm font-bold text-slate-600 hover:text-indigo-600 bg-slate-100 px-4 py-2 rounded-full transition-colors">אודות והצטרפות</a>
+            <a href="about.html" class="text-sm font-bold text-slate-600 hover:text-indigo-600 bg-slate-100 px-4 py-2 rounded-full transition-colors">אודות המאגר</a>
         </div>
     </nav>
 
@@ -74,8 +74,7 @@
         
         let db = { folders: {}, files: {} }; // מסד הנתונים שיטען מהקובץ
         let navigationStack = [{ id: ROOT_ID, name: 'ראשי' }];
-        let isMember = false;
-        let siteConfig = { groupPassword: "" };
+        let siteConfig = {};
 
         async function initApp() {
             try {
@@ -88,7 +87,20 @@
                         document.getElementById('announcement-banner').classList.remove('hidden');
                     }
                 }
-                isMember = (localStorage.getItem('site_password') === siteConfig.groupPassword);
+
+                // טעינת היסטוריית ניווט מהדפדפן
+                const savedStack = localStorage.getItem('podcast_nav_stack');
+                if (savedStack) {
+                    try {
+                        navigationStack = JSON.parse(savedStack);
+                        // הוספת בדיקת תקינות למקרה של מערך ריק או פגום
+                        if (!Array.isArray(navigationStack) || navigationStack.length === 0) {
+                            navigationStack = [{ id: ROOT_ID, name: 'ראשי' }];
+                        }
+                    } catch(e) {
+                        navigationStack = [{ id: ROOT_ID, name: 'ראשי' }];
+                    }
+                }
 
                 // 2. טעינת מסד הנתונים הגדול מגיטהאב
                 document.getElementById('splash-status').textContent = "טוען אינדקס קבצים...";
@@ -98,7 +110,15 @@
 
                 // סיום והצגת האתר
                 hideSplash();
-                renderFolder(ROOT_ID);
+                
+                // בדיקה אם התיקייה השמורה עדיין קיימת, אם לא - חוזרים לראשי
+                if (navigationStack.length > 0) {
+                    const currentFolderId = navigationStack[navigationStack.length - 1].id;
+                    if (!db.folders[currentFolderId]) {
+                        navigationStack = [{ id: ROOT_ID, name: 'ראשי' }];
+                    }
+                }
+                renderFolder(navigationStack[navigationStack.length - 1].id);
 
             } catch (e) {
                 console.error(e);
@@ -115,6 +135,10 @@
         function renderFolder(folderId) {
             const grid = document.getElementById('content-grid');
             grid.innerHTML = '';
+            
+            // שמירת המיקום הנוכחי בדפדפן בכל פעם שנכנסים לתיקייה
+            localStorage.setItem('podcast_nav_stack', JSON.stringify(navigationStack));
+            
             renderBreadcrumbs();
 
             // משיכת התוכן מה-DB המקומי (מיידי!)
@@ -154,21 +178,23 @@
         function renderFileCard(file) {
             const grid = document.getElementById('content-grid');
             const cleanName = file.name.replace(/\.[^/.]+$/, "");
+            
+            // מניעת באגים בתצוגה (XSS) במקרה של שמות קבצים עם תווים מיוחדים
+            const safeName = cleanName.replace(/[&<>'"]/g, 
+                tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag] || tag)
+            );
+
             const previewUrl = `https://drive.google.com/file/d/${file.id}/preview`;
             const card = document.createElement('div');
             card.className = 'fade-in bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col';
             
-            let playerHTML = isMember ? `<iframe src="${previewUrl}" allow="autoplay" class="mt-4"></iframe>` : `
-                <div class="mt-4 h-[140px] bg-slate-50 rounded-xl flex items-center justify-center">
-                    <a href="about.html" class="bg-indigo-600 text-white text-xs font-bold px-4 py-2 rounded-full">התחבר להאזנה</a>
-                </div>`;
-
+            // הוספת loading="lazy" (קריטי מאוד לביצועים)
             card.innerHTML = `
                 <div class="mb-2">
                     <span class="text-[10px] font-bold text-slate-400 block mb-1 uppercase">קובץ שמע</span>
-                    <h3 class="font-bold text-slate-800 leading-tight line-clamp-2" title="${cleanName}">${cleanName}</h3>
+                    <h3 class="font-bold text-slate-800 leading-tight line-clamp-2" title="${safeName}">${safeName}</h3>
                 </div>
-                ${playerHTML}
+                <iframe src="${previewUrl}" allow="autoplay" loading="lazy" class="mt-4"></iframe>
             `;
             grid.appendChild(card);
         }
