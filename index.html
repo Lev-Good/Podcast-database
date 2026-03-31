@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מאגר הפודקאסטים פרימיום</title>
+    <!-- Tailwind CSS לעיצוב מתקדם -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap');
+        
+        body { 
+            font-family: 'Heebo', sans-serif; 
+            background-color: #f8fafc;
+            /* רקע עדין ומודרני של רשת */
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* אנימציות כניסה יוקרתיות */
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* עיצוב פס גלילה לאתר */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* הגדרת סמן חץ לתיבת הסינון */
+        select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: left 1rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-left: 2.5rem;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen relative overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900">
+    
+    <!-- הילת גרדיאנט ברקע -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[500px] bg-gradient-to-b from-indigo-500/10 via-purple-500/5 to-transparent blur-3xl -z-10 rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        
+        <!-- אזור כותרת - Hero Section -->
+        <header class="text-center mb-16 fade-up" style="animation-delay: 0.1s;">
+            <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-md border border-slate-200 shadow-sm text-sm font-bold text-indigo-600 tracking-wide mb-6">
+                <span class="w-2 h-2 rounded-full bg-indigo-500 ml-2 animate-pulse"></span>
+                אוסף שמע אקסקלוסיבי
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900">מאגר הפודקאסטים</span>
+            </h1>
+            <p class="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
+                האזינו לפרקים בגישה ישירה ומהירה, בעיצוב נקי וחווית שמע מתקדמת. מתעדכן אוטומטית בזמן אמת.
+            </p>
+        </header>
+
+        <!-- אזור חיפוש וסינון מתקדם - Glassmorphism -->
+        <div class="max-w-4xl mx-auto mb-16 fade-up" style="animation-delay: 0.2s;">
+            <div class="bg-white/70 backdrop-blur-xl p-3 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white flex flex-col md:flex-row gap-3">
+                <!-- תיבת חיפוש -->
+                <div class="relative flex-1 group">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none transition-colors group-focus-within:text-indigo-600">
+                        <svg class="w-5 h-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="search-input" class="block w-full pr-12 pl-4 py-4 border-0 bg-transparent rounded-2xl leading-5 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium text-slate-700 text-lg" placeholder="חפש פרק מתוך המאגר...">
+                </div>
+                
+                <!-- קו מפריד במסכים גדולים -->
+                <div class="hidden md:block w-px bg-slate-200 my-2"></div>
+
+                <!-- תיבת סינון -->
+                <div class="w-full md:w-56">
+                    <select id="sort-select" class="block w-full px-4 py-4 border-0 bg-transparent rounded-2xl leading-5 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer font-medium text-slate-600 appearance-none text-lg">
+                        <option value="newest">הכי חדשים קודם</option>
+                        <option value="oldest">הכי ישנים קודם</option>
+                        <option value="a-z">לפי א'-ב'</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- אזור הודעת שגיאה -->
+        <div id="error-msg" class="hidden max-w-3xl mx-auto text-center text-red-600 bg-red-50/80 backdrop-blur-sm p-6 rounded-2xl border border-red-100 mb-8 shadow-sm font-medium"></div>
+
+        <!-- רשימת הפודקאסטים (מכילה שלדי טעינה בהתחלה) -->
+        <div id="podcast-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- שלדי טעינה יוקרתיים -->
+            <script>
+                for(let i=0; i<6; i++) {
+                    document.write(`
+                    <div class="skeleton-card animate-pulse bg-white/80 p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col justify-between h-[280px]">
+                        <div>
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="h-6 w-20 bg-slate-200 rounded-full"></div>
+                                <div class="h-4 w-16 bg-slate-100 rounded-full"></div>
+                            </div>
+                            <div class="h-8 w-3/4 bg-slate-200 rounded-xl mb-3"></div>
+                            <div class="h-6 w-1/2 bg-slate-100 rounded-xl"></div>
+                        </div>
+                        <div class="h-16 w-full bg-slate-50 rounded-2xl mt-6"></div>
+                    </div>`);
+                }
+            </script>
+        </div>
+    </div>
+
+    <script>
+        // ---------------------------------------------------------
+        // הגדרות מערכת - הזן מפתח API
+        // ---------------------------------------------------------
+        const API_KEY = 'YOUR_GOOGLE_API_KEY_HERE'; 
+        const FOLDER_ID = '1YvJzJJlKzKMunkYQWAqwFGK6VElIW-WT';
+        
+        let allPodcasts = [];
+
+        async function loadPodcasts() {
+            if (API_KEY === 'YOUR_GOOGLE_API_KEY_HERE') {
+                showError('כדי שהאתר יעבוד, חובה להכניס מפתח API של Google בקוד.');
+                removeSkeletons();
+                return;
+            }
+
+            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,createdTime)&orderBy=createdTime+desc`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.error) {
+                    showError(data.error.code === 403 ? 'שגיאת הרשאה. ודא שהתיקייה בדרייב מוגדרת פתוחה לכולם.' : 'שגיאה מגוגל: ' + data.error.message);
+                    removeSkeletons();
+                    return;
+                }
+
+                allPodcasts = data.files.filter(file => file.mimeType.includes('audio') || file.mimeType.includes('video'));
+                applyFilters();
+
+            } catch (err) {
+                showError('שגיאה בתקשורת מול גוגל דרייב. אנא ודא שהחיבור תקין.');
+                removeSkeletons();
+            }
+        }
+
+        function removeSkeletons() {
+            const list = document.getElementById('podcast-list');
+            const skeletons = list.querySelectorAll('.skeleton-card');
+            skeletons.forEach(s => s.remove());
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const sortOrder = document.getElementById('sort-select').value;
+
+            let filtered = allPodcasts.filter(file => {
+                const cleanName = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
+                return cleanName.includes(searchTerm);
+            });
+
+            if (sortOrder === 'newest') {
+                filtered.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+            } else if (sortOrder === 'oldest') {
+                filtered.sort((a, b) => new Date(a.createdTime) - new Date(b.createdTime));
+            } else if (sortOrder === 'a-z') {
+                filtered.sort((a, b) => a.name.localeCompare(b.name, 'he'));
+            }
+
+            renderPodcasts(filtered);
+        }
+
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        document.getElementById('sort-select').addEventListener('change', applyFilters);
+
+        function renderPodcasts(files) {
+            const list = document.getElementById('podcast-list');
+            list.innerHTML = ''; 
+
+            if (files.length === 0) {
+                list.innerHTML = '<div class="col-span-full text-center text-slate-500 py-16 bg-white/50 rounded-[2rem] shadow-sm border border-slate-100/60 text-xl font-medium fade-up">לא נמצאו פרקים התואמים לחיפוש.</div>';
+                list.classList.remove('grid');
+                return;
+            }
+            
+            list.classList.add('grid');
+
+            files.forEach((file, index) => {
+                const audioUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
+                const dateObj = new Date(file.createdTime);
+                const formattedDate = dateObj.toLocaleDateString('he-IL', { year: 'numeric', month: 'short', day: 'numeric' });
+                const cleanName = file.name.replace(/\.[^/.]+$/, "");
+
+                const card = document.createElement('div');
+                const animationDelay = Math.min(index * 0.05, 0.4);
+                
+                // עיצוב כרטיסייה מתקדם
+                card.className = `fade-up bg-white rounded-[2rem] p-7 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-slate-100 transition-all duration-500 transform hover:-translate-y-2 flex flex-col justify-between group relative overflow-hidden`;
+                card.style.animationDelay = `${animationDelay}s`;
+                
+                card.innerHTML = `
+                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-900 text-white shadow-sm">
+                                פרק שמע
+                            </span>
+                            <span class="text-sm text-slate-400 font-medium">
+                                ${formattedDate}
+                            </span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-800 leading-snug mb-2 group-hover:text-indigo-600 transition-colors">${cleanName}</h2>
+                    </div>
+                    
+                    <!-- נגן קאסטום יוקרתי (LTR כדי שפס ההתקדמות יעבוד אוניברסלית) -->
+                    <div dir="ltr" class="audio-player-wrapper bg-slate-50/80 p-3 rounded-2xl flex items-center gap-4 mt-8 border border-slate-100/80 transition-all duration-300">
+                        <button class="play-btn w-12 h-12 flex-shrink-0 bg-white border border-slate-200 text-slate-800 rounded-full flex items-center justify-center hover:border-indigo-600 hover:text-indigo-600 transition-all shadow-sm hover:shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-100 z-10">
+                            <!-- Play Icon -->
+                            <svg class="play-icon w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <!-- Pause Icon -->
+                            <svg class="pause-icon w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                        
+                        <div class="flex-1">
+                            <div class="flex justify-between text-[11px] text-slate-400 font-bold mb-1.5 px-0.5 uppercase tracking-wider">
+                                <span class="current-time">00:00</span>
+                                <span class="duration">--:--</span>
+                            </div>
+                            <div class="progress-container h-2 bg-slate-200 rounded-full cursor-pointer relative overflow-hidden group/progress">
+                                <div class="progress-bar absolute left-0 top-0 h-full bg-slate-800 group-hover/progress:bg-indigo-600 transition-colors w-0 rounded-full"></div>
+                            </div>
+                        </div>
+                        
+                        <audio src="${audioUrl}" type="${file.mimeType}" preload="metadata" class="hidden"></audio>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+
+            // הפעלת הפונקציונליות של הנגנים המותאמים אישית
+            attachAudioListeners();
+        }
+
+        // פונקציית עזר להמרת שניות לפורמט זמן (דקות:שניות)
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "00:00";
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        // לוגיקת נגן שמע יוקרתי
+        function attachAudioListeners() {
+            const players = document.querySelectorAll('.audio-player-wrapper');
+            let currentlyPlaying = null;
+
+            players.forEach(wrapper => {
+                const audio = wrapper.querySelector('audio');
+                const playBtn = wrapper.querySelector('.play-btn');
+                const playIcon = wrapper.querySelector('.play-icon');
+                const pauseIcon = wrapper.querySelector('.pause-icon');
+                const progressContainer = wrapper.querySelector('.progress-container');
+                const progressBar = wrapper.querySelector('.progress-bar');
+                const currentTimeEl = wrapper.querySelector('.current-time');
+                const durationEl = wrapper.querySelector('.duration');
+
+                // טעינת אורך הקובץ
+                audio.addEventListener('loadedmetadata', () => {
+                    durationEl.textContent = formatTime(audio.duration);
+                });
+
+                // ניהול ניגון ועצירה
+                playBtn.addEventListener('click', () => {
+                    // עצירת פרק אחר אם הוא מתנגן
+                    if (currentlyPlaying && currentlyPlaying !== audio) {
+                        currentlyPlaying.pause(); 
+                    }
+                    
+                    if (audio.paused) {
+                        audio.play();
+                        currentlyPlaying = audio;
+                    } else {
+                        audio.pause();
+                    }
+                });
+
+                // עדכון ויזואלי למצב ניגון
+                audio.addEventListener('play', () => {
+                    playIcon.classList.add('hidden');
+                    pauseIcon.classList.remove('hidden');
+                    playBtn.classList.replace('bg-white', 'bg-slate-900');
+                    playBtn.classList.replace('text-slate-800', 'text-white');
+                    wrapper.classList.add('bg-indigo-50/50', 'border-indigo-100');
+                });
+
+                audio.addEventListener('pause', () => {
+                    playIcon.classList.remove('hidden');
+                    pauseIcon.classList.add('hidden');
+                    playBtn.classList.replace('bg-slate-900', 'bg-white');
+                    playBtn.classList.replace('text-white', 'text-slate-800');
+                    wrapper.classList.remove('bg-indigo-50/50', 'border-indigo-100');
+                });
+
+                // עדכון פס התקדמות
+                audio.addEventListener('timeupdate', () => {
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = `${percent || 0}%`;
+                    currentTimeEl.textContent = formatTime(audio.currentTime);
+                });
+
+                // דילוג בתוך הקובץ על ידי לחיצה על פס ההתקדמות
+                progressContainer.addEventListener('click', (e) => {
+                    const rect = progressContainer.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    audio.currentTime = pos * audio.duration;
+                });
+                
+                // איפוס בסיום ההשמעה
+                audio.addEventListener('ended', () => {
+                    audio.currentTime = 0;
+                    playIcon.classList.remove('hidden');
+                    pauseIcon.classList.add('hidden');
+                    progressBar.style.width = '0%';
+                });
+            });
+        }
+
+        function showError(msg) {
+            removeSkeletons();
+            const errorEl = document.getElementById('error-msg');
+            errorEl.textContent = msg;
+            errorEl.classList.remove('hidden');
+        }
+
+        // התחלת הטעינה
+        loadPodcasts();
+    </script>
+</body>
+</html>
