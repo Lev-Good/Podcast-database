@@ -100,7 +100,7 @@
     </div>
 
     <script>
-        // --- חובה לעדכן: הכתובת החדשה שקיבלת מהסקריפט החדש שיצרנו! ---
+        // --- עדכון נתונים אוטומטי ---
         const GAS_URL = 'https://script.google.com/macros/s/AKfycbyGIavueF5eYZP542khG6WSYztk-OA6wadPJp9pBiCvJpg--opvOmDm6iqvH4EWzoWGVA/exec'; 
         const ROOT_FOLDER_ID = '1YvJzJJlKzKMunkYQWAqwFGK6VElIW-WT';
         
@@ -143,25 +143,25 @@
                 }
                 const savedPassword = localStorage.getItem('site_password');
                 isMember = (savedPassword === siteConfig.groupPassword && siteConfig.groupPassword !== "");
+                
+                // הצגת הודעת מערכת אם קיימת
+                if (siteConfig.announcement && siteConfig.announcement.trim() !== '') {
+                    // כאן אפשר להוסיף לוגיקה להצגת באנר הודעות אם תרצה
+                }
             } catch(e) { console.error("שגיאה בטעינת הגדרות", e); }
 
-            // נטען את התיקייה הראשונה - שימו לב שזה קורה כבר עכשיו, מתחת למסך הפתיחה!
+            // נטען את התיקייה הראשונה
             loadFolder(ROOT_FOLDER_ID);
         }
 
         async function loadFolder(folderId) {
-            if (GAS_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-                showError('חובה להכניס את כתובת ה-Google Apps Script המעודכנת.');
-                return;
-            }
-
             const grid = document.getElementById('content-grid');
             const spinner = document.getElementById('loading-spinner');
             
             document.getElementById('error-msg').classList.add('hidden');
             renderBreadcrumbs();
 
-            // 1. קסם המטמון: אם התיקייה כבר בזיכרון, נטען אותה מיד (אפס זמן טעינה!)
+            // 1. קסם המטמון
             if (folderCache[folderId]) {
                 grid.innerHTML = '';
                 spinner.classList.add('hidden');
@@ -169,14 +169,11 @@
                 return;
             }
 
-            // 2. אם התיקייה לא בזיכרון, נציג ספינר ונטען אותה מגוגל
             grid.innerHTML = '';
             spinner.classList.remove('hidden');
 
             try {
                 let data;
-                
-                // בדיקה אם המשתמש ריחף קודם על התיקייה והבקשה כבר רצה ברקע
                 if (activePrefetches[folderId]) {
                     data = await activePrefetches[folderId];
                 } else {
@@ -187,14 +184,12 @@
 
                 if (data.error) throw new Error(data.error);
 
-                // שומרים בזיכרון כדי שבפעם הבאה זה יהיה מיידי
                 folderCache[folderId] = data;
                 delete activePrefetches[folderId];
 
                 spinner.classList.add('hidden');
                 renderContent(data.folders, data.files);
 
-                // אם זו טעינת השורש הראשונית: נסיר את מסך הפתיחה ונתחיל "לטרוף" את שאר התיקיות ברקע
                 if (folderId === ROOT_FOLDER_ID && !isRootLoaded) {
                     isRootLoaded = true;
                     checkAndHideSplash();
@@ -204,8 +199,6 @@
             } catch (err) {
                 spinner.classList.add('hidden');
                 showError('שגיאה בטעינת התיקייה. ייתכן ואין הרשאות, או שיש בעיית תקשורת.');
-                
-                // במקרה של שגיאה - חייבים להעלים את המסך כדי שהמשתמש יראה אותה
                 if (!isRootLoaded) {
                     isRootLoaded = true;
                     checkAndHideSplash();
@@ -213,29 +206,20 @@
             }
         }
 
-        // פונקציה חדשה: טעינה בסתר ברקע
         function prefetchFolder(folderId) {
-            // אם זה כבר בזיכרון או שכבר יש בקשה שרצה - אל תעשה כלום
             if (folderCache[folderId] || activePrefetches[folderId]) return;
-            
-            // מתחיל להוריד ברקע בלי לעצור את האתר
             activePrefetches[folderId] = fetch(`${GAS_URL}?folderId=${folderId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (!data.error) folderCache[folderId] = data; // שומר בזיכרון מראש!
+                    if (!data.error) folderCache[folderId] = data;
                     return data;
                 })
                 .catch(() => { delete activePrefetches[folderId]; });
         }
 
-        // פונקציה חדשה: זחלן רקע חכם שטוען מראש את התיקיות הפנימיות באופן אוטומטי
         function startBackgroundCrawler(folders) {
             if (!folders || folders.length === 0) return;
-            
-            // עוברים על התיקיות שמופיעות כעת במסך
             folders.forEach((folder, index) => {
-                // מפעילים את הטעינה המקדימה עם השהייה של חצי שנייה בין כל בקשה
-                // (כדי לא לשלוח 50 בקשות בבת אחת לגוגל ולגרום לחסימת האתר)
                 setTimeout(() => {
                     prefetchFolder(folder.id);
                 }, index * 500); 
@@ -251,7 +235,6 @@
                 btn.className = `font-bold ${index === navigationStack.length - 1 ? 'text-slate-800' : 'text-indigo-600 hover:text-indigo-800'} transition-colors`;
                 btn.textContent = navItem.name;
                 
-                // לחיצה על פירור לחם מחזירה אחורה לאותה תיקייה
                 btn.onclick = () => {
                     if (index < navigationStack.length - 1) {
                         navigationStack = navigationStack.slice(0, index + 1);
@@ -261,7 +244,6 @@
 
                 container.appendChild(btn);
 
-                // הוספת מפריד '>' אם זה לא האיבר האחרון
                 if (index < navigationStack.length - 1) {
                     const sep = document.createElement('span');
                     sep.className = 'text-slate-400 mx-2 select-none font-normal';
@@ -279,18 +261,13 @@
                 return;
             }
 
-            // סידור הקבצים מהחדש לישן
             files.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
 
-            // הצגת תיקיות תחילה
             folders.forEach(folder => {
                 const card = document.createElement('div');
                 card.className = 'fade-in bg-white p-5 rounded-2xl shadow-sm hover:shadow-md border border-slate-100 cursor-pointer transition-all transform hover:-translate-y-1 flex items-center gap-4 group';
                 
-                // --- מנגנון טעינה מקדימה (Prefetch) ---
-                // כשמעבירים עכבר על התיקייה - מתחיל להוריד את התוכן מיד
                 card.onmouseenter = () => prefetchFolder(folder.id);
-                // תמיכה בטלפונים (מתחיל להוריד ברגע שהאצבע נוגעת, לפני שחרור הלחיצה)
                 card.ontouchstart = () => prefetchFolder(folder.id);
 
                 card.onclick = () => {
@@ -310,12 +287,9 @@
                 grid.appendChild(card);
             });
 
-            // הצגת קבצים
             files.forEach(file => {
                 const cleanName = file.name.replace(/\.[^/.]+$/, "");
                 const formattedDate = new Date(file.createdTime).toLocaleDateString('he-IL');
-                
-                // הקישור שמפעיל את הנגן המובנה של גוגל דרייב שיודע לטפל בהרשאות משתמש
                 const previewUrl = `https://drive.google.com/file/d/${file.id}/preview`;
 
                 const card = document.createElement('div');
@@ -323,7 +297,6 @@
                 
                 let playerHTML = '';
                 if (isMember) {
-                    // שימוש ב-iframe של גוגל במקום ב-audio. גוגל תזהה אוטומטית אם יש לו הרשאה לדרייב או לא.
                     playerHTML = `<iframe src="${previewUrl}" allow="autoplay" class="mt-4"></iframe>`;
                 } else {
                     playerHTML = `
@@ -356,7 +329,6 @@
             errorEl.classList.remove('hidden');
         }
 
-        // הפעלה ראשונית של האפליקציה (הסרנו את פונקציית הטיימר הקשיחה שהייתה כאן קודם)
         initApp();
     </script>
 </body>
