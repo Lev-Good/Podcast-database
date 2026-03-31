@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אודות - מאגר הפודקאסטים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap');
+        body { font-family: 'Heebo', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen relative overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900 flex flex-col items-center justify-center p-4">
+    
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-3xl -z-10 rounded-full"></div>
+
+    <div class="max-w-2xl w-full bg-white/80 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-2xl border border-white relative overflow-hidden text-center">
+        <!-- עיטור גרפי רקע -->
+        <div class="absolute -top-16 -right-16 w-40 h-40 bg-indigo-50 rounded-full opacity-50 -z-10"></div>
+        <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-purple-50 rounded-full opacity-50 -z-10"></div>
+
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-indigo-600 text-white mb-8 shadow-lg shadow-indigo-200">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+        </div>
+
+        <h1 class="text-4xl md:text-5xl font-black mb-6 text-slate-900">אודות המאגר</h1>
+        
+        <div class="space-y-6 text-slate-600 text-lg leading-relaxed mb-10 text-right bg-slate-50 p-6 rounded-2xl border border-slate-100">
+            <p>ברוכים הבאים למאגר הפודקאסטים המקיף. הפרויקט הזה מאגד בתוכו כמות אדירה של פודקאסטים ושיעורי שמע, ולא רק של יוצר אחד - אלא של <strong>מגוון רחב של יוצרים שונים ומשונים</strong> מכל רחבי הרשת.</p>
+            <p>כדי לשמור על קהילה איכותית וכדי שנוכל להמשיך לתחזק את המאגר ולהעלות תוכן חדש, <strong>ההאזנה לפרקים סגורה לחברי הקבוצה שלנו בלבד.</strong></p>
+            
+            <div class="bg-indigo-50 border border-indigo-100 p-5 rounded-xl mt-4">
+                <h3 class="font-bold text-indigo-900 mb-2">איך מצטרפים?</h3>
+                <p class="text-indigo-800 text-base">ההצטרפות היא קלה ופשוטה. שלחו לנו הודעה בווצאפ או הצטרפו לקבוצה השקטה שלנו לקבלת עדכונים. לאחר מכן תוכלו לאשר כאן את הצטרפותכם.</p>
+                <!-- ניתן להחליף את הקישור הזה בקישור לקבוצה שלך -->
+                <a href="#" class="inline-block mt-3 font-bold text-indigo-600 hover:text-indigo-800 underline underline-offset-4">לחצו כאן למעבר לקבוצה</a>
+            </div>
+        </div>
+
+        <!-- כפתור אישור הצטרפות -->
+        <button id="confirm-join-btn" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg flex items-center justify-center gap-3">
+            <span>אישרתי והצטרפתי לקבוצה, פתח לי את ההאזנה</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+        </button>
+        
+        <div class="mt-6">
+            <a href="index.html" class="text-slate-400 hover:text-slate-600 font-medium transition-colors">חזרה לדף הראשי</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('confirm-join-btn').addEventListener('click', function() {
+            // שומרים זיכרון בדפדפן שהמשתמש אישר את ההצטרפות
+            localStorage.setItem('isGroupMember', 'true');
+            
+            // אפקט חזותי קצר לפני מעבר
+            this.innerHTML = 'הגישה נפתחה! מעביר אותך...';
+            this.classList.replace('bg-slate-900', 'bg-green-600');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
