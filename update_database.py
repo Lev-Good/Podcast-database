@@ -3,7 +3,7 @@ import json
 import sys
 
 # כתובת הסקריפט המעודכנת שלך
-GAS_URL = "https://script.google.com/macros/s/AKfycbyGIavueF5eYZP542khG6WSYztk-OA6wadPJp9pBiCvJpg--opvOmDm6iqvH4EWzoWGVA/exec"
+GAS_URL = "https://script.google.com/macros/s/AKfycbz3nayW_1lGLHc84KGnPcn_-o5lre0-txUOYkqQWOjenYVcfs7CTteNURzy9olm8pz77w/exec"
 
 def fetch_all():
     try:
