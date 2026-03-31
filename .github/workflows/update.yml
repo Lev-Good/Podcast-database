@@ -2,17 +2,17 @@ name: Update Podcast Database
 on:
   schedule:
     - cron: '0 */2 * * *' # רץ כל שעתיים
-  workflow_dispatch: # מאפשר להריץ ידנית
+  workflow_dispatch: # מאפשר להריץ ידנית דרך לשונית Actions
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # גרסה מעודכנת הפותרת את אזהרת Node
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # גרסה מעודכנת הפותרת את אזהרת Node
         with:
           python-version: '3.x'
 
@@ -20,7 +20,8 @@ jobs:
         run: pip install requests
 
       - name: Run update script
-        run: python update_db.py
+        # וודא שהשם כאן תואם בדיוק לשם הקובץ בגיטהאב
+        run: python update_database.py
 
       - name: Commit and Push changes
         run: |
