@@ -2931,6 +2931,7 @@
       "name": "לא תשכח",
       "subFolders": [],
       "files": [
+        "1RPc_1nNhwasKG7R8jtJw0QnNc01wj33E",
         "1sb9iLbEESW29oE7C_YMoSkJUX0X5h4tx",
         "1UGQisRjRAewgS4ih9A-vcPipe4pI0_KA",
         "1xl8vmIotXaOQx50laTdDUEa7C9RNPyub",
@@ -3609,6 +3610,9 @@
       "name": "אזמר בשבחין",
       "subFolders": [],
       "files": [
+        "1ZMHxcFNGkRsM2KUyq32Zzfue50wecZeJ",
+        "1dJoEhcnBp4hKXfrZBatIjnPwuWJLE8SC",
+        "11PzZbOkwFW-zJceZke6pWcIgAJbnNWx7",
         "1wy7lnAxmMY1fIQXip51D__TbtIF6Ql1F",
         "1o8G8GnPmHUwTtOez0gpjJreWRxtpYprc",
         "1_PEYTYE50cQC8k5jVbypOszW3ZT5RgXE",
@@ -8033,6 +8037,8 @@
       "name": "והאיש משה",
       "subFolders": [],
       "files": [
+        "1n-EBbB-K78WzvkN-8WbaeZx5nq133Y3u",
+        "1O3FZziVHP8QA_EyumUQCJ4ndhfG6kL3G",
         "1oMR0wV9PcQp7KF5ro2rp44rcVx-jvcum",
         "1RzWglDCQ8TMepSd9ScG-CMIvSdI-pCyw",
         "13o_IoAX5tym-fW2kxTdmcjB8kbGP3Eqa",
@@ -21889,6 +21895,11 @@
       "name": "פרק 00 הסכת חדש על השואה מהרגע שבו היא הסתיימה.mp3",
       "createdTime": "2025-11-06T18:44:44.207Z"
     },
+    "1RPc_1nNhwasKG7R8jtJw0QnNc01wj33E": {
+      "id": "1RPc_1nNhwasKG7R8jtJw0QnNc01wj33E",
+      "name": "פרק 62 לובלין המעטירה.mp3",
+      "createdTime": "2026-05-12T10:45:57.605Z"
+    },
     "1sb9iLbEESW29oE7C_YMoSkJUX0X5h4tx": {
       "id": "1sb9iLbEESW29oE7C_YMoSkJUX0X5h4tx",
       "name": "פרק 61 ורשה היהודית - של העבר וההווה.mp3",
@@ -24738,6 +24749,21 @@
       "id": "1uHzi-uKkySBAu0-Z81uA2LC69rVqp3tJ",
       "name": "פרק 01 אל תיפול - אברהם פריד חיים ישראל ובנצי שטיין.mp3",
       "createdTime": "2025-12-01T09:17:54.352Z"
+    },
+    "1ZMHxcFNGkRsM2KUyq32Zzfue50wecZeJ": {
+      "id": "1ZMHxcFNGkRsM2KUyq32Zzfue50wecZeJ",
+      "name": "פרק 46 דוד המלך מלמד לזמר לבורא גם בגיא צלמוות.mp3",
+      "createdTime": "2026-05-12T10:48:48.904Z"
+    },
+    "1dJoEhcnBp4hKXfrZBatIjnPwuWJLE8SC": {
+      "id": "1dJoEhcnBp4hKXfrZBatIjnPwuWJLE8SC",
+      "name": "פרק 44 החירות והדרור האמיתיים לשומרי השבת.mp3",
+      "createdTime": "2026-05-12T10:47:56.257Z"
+    },
+    "11PzZbOkwFW-zJceZke6pWcIgAJbnNWx7": {
+      "id": "11PzZbOkwFW-zJceZke6pWcIgAJbnNWx7",
+      "name": "פרק 45 בני ההיכל הנכספים לשבת מזמרים לזיו קדשו.mp3",
+      "createdTime": "2026-05-12T10:47:50.943Z"
     },
     "1wy7lnAxmMY1fIQXip51D__TbtIF6Ql1F": {
       "id": "1wy7lnAxmMY1fIQXip51D__TbtIF6Ql1F",
@@ -41933,6 +41959,16 @@
       "id": "1uPe4iE0XX7rXT4yB_VT8GQGjBqDnXl3x",
       "name": "פרק 130 עם תומר ישעיהו 13 בינואר 2025.mp3",
       "createdTime": "2025-12-02T20:14:08.387Z"
+    },
+    "1n-EBbB-K78WzvkN-8WbaeZx5nq133Y3u": {
+      "id": "1n-EBbB-K78WzvkN-8WbaeZx5nq133Y3u",
+      "name": "פרק 08 שליחות יהודית.mp3",
+      "createdTime": "2026-05-12T10:38:59.226Z"
+    },
+    "1O3FZziVHP8QA_EyumUQCJ4ndhfG6kL3G": {
+      "id": "1O3FZziVHP8QA_EyumUQCJ4ndhfG6kL3G",
+      "name": "פרק 09 הירא ורך הלבב.mp3",
+      "createdTime": "2026-05-12T10:38:54.051Z"
     },
     "1oMR0wV9PcQp7KF5ro2rp44rcVx-jvcum": {
       "id": "1oMR0wV9PcQp7KF5ro2rp44rcVx-jvcum",
